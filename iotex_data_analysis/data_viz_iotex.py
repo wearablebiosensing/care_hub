@@ -9,6 +9,7 @@ import numpy as np
 import json
 import glob
 from sklearn import preprocessing
+
 ####################################################################################################################################
 # Activity codes:
 # 0: Left hand finger tap
@@ -37,41 +38,61 @@ def activity_codes(file_name,activity_code):
             exercise_name = "HandFlip"
         if activity_code == 6:
             exercise_name = "HoldHands"
-        if activity_code == 8:
+        if activity_code == 7:
             exercise_name = "FingerToNose"
+        if activity_code == 9:
+            exercise_name = "RestingHands"
     return exercise_name
 
 df_dates_pid = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/pd_dates_list.csv")
 df_lg_paths = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/lg_file_path.csv")
 app_iotex_layout = html.Div([
     html.Div([
+        html.Header(
+            "IoTex Longitudinal Parkinsons Disease Dataset",style={ 'font-family': 'IBM Plex Sans','color':'white','font-size': '50pt'}
+        ),
         html.Div([
-            dcc.Dropdown(
+            # dbc.Container(dbc.Row(dbc.Col([navbar])), id="nav_bar"),
+            html.Br(),
+            dbc.Row(style = {"align":"center"}, children=[
+                dbc.Col([
+                    dcc.Dropdown(
                         id='participant_id',
                         options=  [{'label': i, 'value': i} for i in df_dates_pid["ParticipantList"].unique()],
                         placeholder="Select Device ID ",
-                        value = df_dates_pid["ParticipantList"].unique()[0]),
-            html.Br(),
-            dcc.Dropdown(
+                        value = df_dates_pid["ParticipantList"].unique()[0],
+                        # style = {"align":"center"}
+                        ), html.Br()]),
+                dbc.Col([
+                        dcc.Dropdown(
+                                id='task_id',
+                                options=  [],
+                                placeholder="Select Task ",
+                            ),  
+                            html.Br()])
+                    ]),
+            dbc.Row(style = {"align":"center"}, children=[
+                #col1
+                dbc.Col([
+                     dcc.Dropdown(
                             id='dates_id',
                             options=  [],
                             placeholder="Select Patient ",
                             
                         ),
-            html.Br(),
-            dcc.Dropdown(
-                            id='task_id',
-                            options=  [],
-                            placeholder="Select Task ",
-                            
-                        ),
-             html.Br(),
-            dcc.Dropdown(
-                        id='activity_id',
-                        options = [],
-                        placeholder = "Activity Codes",    
-                        ),
-  
+                    html.Br()]
+                ),
+                #col2
+                dbc.Col([
+
+                dcc.Dropdown(
+                            id='activity_id',
+                            options = [],
+                            placeholder = "Activity Codes",    
+                            ),
+                html.Br(),
+                ])
+            ])
         ],
         style={'width': '48%', 'display': 'inline-block'}),
     ]),
@@ -94,14 +115,13 @@ def sessions_dropdown(participant_id, dates_id):
     # Query by PID.
     pid_df = df_lg_paths[df_lg_paths["ParticipantList"] == participant_id]
     dates_query_df = pid_df[pid_df["DateList"] == dates_id]
-    #print("dates_query_df = \n",dates_query_df.head())
     return dates_query_df["FileName_LeftGlove"]
 
 @callback(
     Output('activity_id', 'options'),
     Input('task_id', 'value'))
 def activity_dropdown(task_id):
-    lg_code = [0,2,4,6,8]
+    lg_code = [0,2,4,6,7,9]
     rg_code = [1,3,5,7,9]
     if task_id.startswith("lg"):
         return lg_code
@@ -150,7 +170,7 @@ def update_graph(pid, dates_id, task_id,activity_id):
 
     fig.update_layout(
         font_family="IBM Plex Sans",
-        title= "IoTex Longitudinal PD dataset" ,
+        title= "" ,
         template=large_rockwell_template,height=1000, width=1300) 
     return fig
 
