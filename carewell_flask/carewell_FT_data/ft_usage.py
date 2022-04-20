@@ -71,17 +71,17 @@ card1 = dbc.CardGroup(
 app_carewell_layout = html.Div([
     html.Div([
         html.Div([
- dcc.Dropdown(
-                id='patient_id_filter',
-                options=  [{'label': i, 'value': i} for i in patientIDs],
-                placeholder="Select Patient "
-            ),
-              dcc.Dropdown(
-                id='date_id_filter',
-                options=  [],
-                placeholder="Select Date "
-            ),
-        ],
+        dcc.Dropdown(
+                        id='patient_id_filter',
+                        options=  [{'label': i, 'value': i} for i in patientIDs],
+                        placeholder="Select Patient "
+                    ),
+                    dcc.Dropdown(
+                        id='date_id_filter',
+                        options=  [],
+                        placeholder="Select Date "
+                    ),
+                ],
         style={'width': '48%', 'display': 'inline-block'}),
     ]),
     #dbc.Container(dbc.Row(dbc.Col([card1])), id="card_view"),

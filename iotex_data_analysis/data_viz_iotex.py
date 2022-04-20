@@ -75,7 +75,7 @@ app_iotex_layout = html.Div([
         ],
         style={'width': '48%', 'display': 'inline-block'}),
     ]),
-    dcc.Graph(id='indicator-graphic'),
+    dcc.Graph(id='indicator-graphic-iotex'),
     html.Div(id='iotex_dash')
 ])
 # Chained callback filer by patient ID and Device ID.
@@ -110,7 +110,7 @@ def activity_dropdown(task_id):
 
 # Displays graphs.
 @callback(
-    Output('indicator-graphic', 'figure'),
+    Output('indicator-graphic-iotex', 'figure'),
     Input('participant_id', 'value'),
     Input('dates_id', 'value'),
     Input('task_id','value'),
@@ -153,7 +153,6 @@ def update_graph(pid, dates_id, task_id,activity_id):
         title= "IoTex Longitudinal PD dataset" ,
         template=large_rockwell_template,height=1000, width=1300) 
     return fig
-# if __name__ == '__main__':
-#     app_iotex.run_server(debug=True)
+
 
     
