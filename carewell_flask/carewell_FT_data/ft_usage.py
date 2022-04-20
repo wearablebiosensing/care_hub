@@ -1,17 +1,15 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash import dcc, html, Input, Output, callback
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 import json
-import dash_bootstrap_components as dbc
 
-app = dash.Dash(__name__)
-df = pd.read_csv("/Users/shehjarsadhu/Desktop/carewell-FT-data/Links_Master_Dates.csv")
+# app_carewell = dash.Dash(__name__)
+df = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_carehub/care_hub_sandbox/carewell_flask/carewell_FT_data/Links_Master_Dates.csv")
 patientIDs = df["PatientID"].unique().tolist()
 # date_ids =  df['Dates']].unique()
 print("Patient IDs", patientIDs)
@@ -70,7 +68,7 @@ card1 = dbc.CardGroup(
     className="mt-4 shadow",
 )
 
-app.layout = html.Div([
+app_carewell_layout = html.Div([
     html.Div([
         html.Div([
  dcc.Dropdown(
@@ -87,12 +85,12 @@ app.layout = html.Div([
         style={'width': '48%', 'display': 'inline-block'}),
     ]),
     #dbc.Container(dbc.Row(dbc.Col([card1])), id="card_view"),
-    dcc.Graph(id='indicator-graphic'),
-    
+    dcc.Graph(id='indicator-graphic-carewell'),
+    html.Div(id='carewell_dash')
 
 ])
 # Chained callback filer by patient ID and date.
-@app.callback(
+@callback(
     Output('date_id_filter', 'options'),
     Input('patient_id_filter', 'value'))
 def dates_dropdown(patient_id):
@@ -100,8 +98,8 @@ def dates_dropdown(patient_id):
     return [{'label': i, 'value': i} for i in date_id_list]
 
 # Displays graphs.
-@app.callback(
-    Output('indicator-graphic', 'figure'),
+@callback(
+    Output('indicator-graphic-carewell', 'figure'),
     Input('patient_id_filter', 'value'),
     Input('date_id_filter', 'value'),)
 def update_graph(pid,date_id):
@@ -147,5 +145,5 @@ def update_graph(pid,date_id):
          template=large_rockwell_template,height=900, width=1500)
     return fig
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# if __name__ == '__main__':
+#     app_carewell.run_server(debug=True)

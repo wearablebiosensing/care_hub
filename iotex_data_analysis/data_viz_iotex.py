@@ -1,14 +1,12 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash import dcc, html, Input, Output, callback
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 import json
-import dash_bootstrap_components as dbc
 import glob
 from sklearn import preprocessing
 ####################################################################################################################################
@@ -25,6 +23,8 @@ from sklearn import preprocessing
 # 9: Hold out hand
 ####################################################################################################################################
 
+# app_iotex = dash.Dash(__name__)
+
 # If left hand use following activity codes.
 def activity_codes(file_name,activity_code):
     exercise_name = ""
@@ -40,16 +40,10 @@ def activity_codes(file_name,activity_code):
         if activity_code == 8:
             exercise_name = "FingerToNose"
     return exercise_name
-    
 
-
-
-
-
-app = dash.Dash(__name__)
 df_dates_pid = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/pd_dates_list.csv")
 df_lg_paths = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/lg_file_path.csv")
-app.layout = html.Div([
+app_iotex_layout = html.Div([
     html.Div([
         html.Div([
             dcc.Dropdown(
@@ -57,18 +51,21 @@ app.layout = html.Div([
                         options=  [{'label': i, 'value': i} for i in df_dates_pid["ParticipantList"].unique()],
                         placeholder="Select Device ID ",
                         value = df_dates_pid["ParticipantList"].unique()[0]),
+            html.Br(),
             dcc.Dropdown(
                             id='dates_id',
                             options=  [],
                             placeholder="Select Patient ",
                             
                         ),
+            html.Br(),
             dcc.Dropdown(
                             id='task_id',
                             options=  [],
                             placeholder="Select Task ",
                             
                         ),
+             html.Br(),
             dcc.Dropdown(
                         id='activity_id',
                         options = [],
@@ -79,16 +76,17 @@ app.layout = html.Div([
         style={'width': '48%', 'display': 'inline-block'}),
     ]),
     dcc.Graph(id='indicator-graphic'),
+    html.Div(id='iotex_dash')
 ])
 # Chained callback filer by patient ID and Device ID.
-@app.callback(
+@callback(
     Output('dates_id', 'options'),
     Input('participant_id', 'value'))
 def dates_dropdown(participant_id):
     return df_dates_pid[df_dates_pid["ParticipantList"]==participant_id]["DateList"]
 
 # Second Chained Call.
-@app.callback(
+@callback(
     Output('task_id', 'options'),
     Input('participant_id', 'value'),
     Input('dates_id', 'value'))
@@ -99,7 +97,7 @@ def sessions_dropdown(participant_id, dates_id):
     #print("dates_query_df = \n",dates_query_df.head())
     return dates_query_df["FileName_LeftGlove"]
 
-@app.callback(
+@callback(
     Output('activity_id', 'options'),
     Input('task_id', 'value'))
 def activity_dropdown(task_id):
@@ -111,7 +109,7 @@ def activity_dropdown(task_id):
         return rg_code
 
 # Displays graphs.
-@app.callback(
+@callback(
     Output('indicator-graphic', 'figure'),
     Input('participant_id', 'value'),
     Input('dates_id', 'value'),
@@ -155,7 +153,7 @@ def update_graph(pid, dates_id, task_id,activity_id):
         title= "IoTex Longitudinal PD dataset" ,
         template=large_rockwell_template,height=1000, width=1300) 
     return fig
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# if __name__ == '__main__':
+#     app_iotex.run_server(debug=True)
 
     
