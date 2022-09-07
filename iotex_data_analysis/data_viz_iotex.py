@@ -44,8 +44,8 @@ def activity_codes(file_name,activity_code):
             exercise_name = "RestingHands"
     return exercise_name
 
-df_dates_pid = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/pd_dates_list.csv")
-df_lg_paths = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/iotex-glove/lg_file_path.csv")
+df_dates_pid = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_IOTEX/iotex-glove/pd_dates_list.csv")
+df_lg_paths = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_IOTEX/iotex-glove/lg_file_path.csv")
 app_iotex_layout = html.Div([
     html.Div([
         html.Header(

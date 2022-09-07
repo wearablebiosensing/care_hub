@@ -7,9 +7,15 @@ from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 import json
+import gspread as gs
 
 # app_carewell = dash.Dash(__name__)
-df = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_carehub/care_hub_sandbox/carewell_flask/carewell_FT_data/Links_Master_Dates.csv")
+# https://docs.google.com/spreadsheets/d/13OqFGn_Tcxq37e-vI8Drw41ehG2ecucDD54JuQroHX4/edit#gid=1057782302
+gc = gs.service_account(filename='/Users/shehjarsadhu/Desktop/carehub-361720-ebee0b4f8dfe.json')
+sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/13OqFGn_Tcxq37e-vI8Drw41ehG2ecucDD54JuQroHX4/edit#gid=1057782302')
+ws = sh.worksheet('links_master_sheet')
+df = pd.DataFrame(ws.get_all_records())
+print("df: --- ",df.head())
 patientIDs = df["PatientID"].unique().tolist()
 # date_ids =  df['Dates']].unique()
 print("Patient IDs", patientIDs)
