@@ -10,29 +10,27 @@ import pandas as pd
 import gspread as gs
 
 card_content1 = [
-    # dbc.CardHeader("IoTex"),
     dbc.CardBody(
         [
-            html.H5("Feasiability Study", className="card-title"),
+            html.H5("Links Group", className="card-title"),
             html.P(
-                "A Smart Glove Digital Health Platform for Monitoring Parkinsons Disease Symptoms",
+                "FT Study Links Group Data",
                 className="card-text",
             ),
-            dbc.CardLink("Go to Feasiability Study Dashboard", href="/carewell-ftstudy"),
+            dbc.CardLink("Go to Links Group dashboard", href="/carewell-ftlinksgroup"),
 
         ]
     ),
 ]
 card_content2 = [
-    # dbc.CardHeader("Carewell"),
     dbc.CardBody(
         [
-            html.H5("Beta Study", className="card-title"),
+            html.H5("App Group", className="card-title"),
             html.P(
-                "A Digital Health Platform for Caregivers of Dementia Patients",
+                "BT study App Group Data",
                 className="card-text",
             ),
-        dbc.CardLink("Go to Beta Study Dashboard", href="/carewell-btstudy"),
+        dbc.CardLink("Go to carewell dashboard", href="carewell-ftappgroup"),
         ]
     ),
 ]
@@ -53,8 +51,7 @@ row_2 = dbc.Row(
 
 cards_carewell = html.Div([row_1])
 
-app_carewell_layout = html.Div([
+app_ft_study_carewell_layout = html.Div([
     dbc.Container(dbc.Row(dbc.Col([cards_carewell])), id="cards_project_nav"),
-    # dcc.Graph(id='indicator-graphic-carewell'),
     html.Div(id='carewell_dash')
 ])

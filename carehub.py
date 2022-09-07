@@ -13,7 +13,7 @@ from sklearn import preprocessing
 # Own imports
 from util_dash_components import *
 from iotex_data_analysis import data_viz_iotex 
-from carewell_flask.carewell_FT_data import ft_usage 
+from carewell_flask.carewell_FT_study import ft_links_group, ft_app_group , ft_study_main
 from carewell_flask import carewell_study
 ## FOLLOWED -- Multistaged plotly app tutorials https://dash.plotly.com/urls
 
@@ -54,8 +54,12 @@ def display_page(pathname):
         return data_viz_iotex.app_iotex_layout
     elif pathname == '/carewell':
         return carewell_study.app_carewell_layout
-    elif pathname == '/carewell-ftusage':
-        return ft_usage.app_carewell_ftusage_layout
+    elif pathname == '/carewell-ftstudy':
+        return ft_study_main.app_ft_study_carewell_layout
+    elif pathname == '/carewell-ftappgroup':
+        return ft_app_group.app_carewell_ftappgroup_layout
+    elif pathname == '/carewell-ftlinksgroup':
+        return ft_links_group.app_carewell_ftlinksgroup_layout
     else:
         return index_page
     # You could also return a 404 "URL not found" page here
