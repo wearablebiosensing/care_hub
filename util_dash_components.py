@@ -10,6 +10,7 @@ import numpy as np
 import json
 import glob
 from sklearn import preprocessing
+
 search_bar = dbc.Row(
     [
         dbc.Col(dbc.Input(type="search", placeholder="Search")),
@@ -74,7 +75,7 @@ card_content2 = [
         [
             html.H5("Carewell", className="card-title"),
             html.P(
-                "A Digitalh Health Platform for Caregivers of Dementia Patients",
+                "A Digital Health Platform for Caregivers of Dementia Patients",
                 className="card-text",
             ),
         dbc.CardLink("Go to carewell dashboard", href="/carewell"),

@@ -1,12 +1,12 @@
-import dash
-from dash import dcc, html, Input, Output, callback
 import dash_bootstrap_components as dbc
+from dash import dcc, html, Input, Output, callback
+
+
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+
 import pandas as pd
-import numpy as np
-import json
 import gspread as gs
 
 # app_carewell = dash.Dash(__name__)
@@ -74,7 +74,7 @@ card1 = dbc.CardGroup(
     className="mt-4 shadow",
 )
 
-app_carewell_layout = html.Div([
+app_carewell_ftusage_layout = html.Div([
     html.Div([
         html.Div([
             # dbc.Container(dbc.Row(dbc.Col([navbar])), id="nav_bar"),
@@ -94,7 +94,6 @@ app_carewell_layout = html.Div([
     #dbc.Container(dbc.Row(dbc.Col([card1])), id="card_view"),
     dcc.Graph(id='indicator-graphic-carewell'),
     html.Div(id='carewell_dash')
-
 ])
 # Chained callback filer by patient ID and date.
 @callback(
@@ -151,6 +150,3 @@ def update_graph(pid,date_id):
         font_family="IBM Plex Sans",
          template=large_rockwell_template,height=900, width=1500)
     return fig
-
-# if __name__ == '__main__':
-#     app_carewell.run_server(debug=True)

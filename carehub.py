@@ -14,7 +14,7 @@ from sklearn import preprocessing
 from util_dash_components import *
 from iotex_data_analysis import data_viz_iotex 
 from carewell_flask.carewell_FT_data import ft_usage 
-
+from carewell_flask import carewell_study
 ## FOLLOWED -- Multistaged plotly app tutorials https://dash.plotly.com/urls
 
 app_carehub = dash.Dash(__name__,suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -53,7 +53,9 @@ def display_page(pathname):
     if pathname == '/iotex':
         return data_viz_iotex.app_iotex_layout
     elif pathname == '/carewell':
-        return ft_usage.app_carewell_layout
+        return carewell_study.app_carewell_layout
+    elif pathname == '/carewell-ftusage':
+        return ft_usage.app_carewell_ftusage_layout
     else:
         return index_page
     # You could also return a 404 "URL not found" page here
