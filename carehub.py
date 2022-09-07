@@ -14,7 +14,6 @@ from sklearn import preprocessing
 from util_dash_components import *
 from iotex_data_analysis import data_viz_iotex 
 from carewell_flask.carewell_FT_data import ft_usage 
-import gspread as gs
 
 ## FOLLOWED -- Multistaged plotly app tutorials https://dash.plotly.com/urls
 

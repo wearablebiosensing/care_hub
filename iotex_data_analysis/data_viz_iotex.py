@@ -9,6 +9,7 @@ import numpy as np
 import json
 import glob
 from sklearn import preprocessing
+import gspread as gs
 
 ####################################################################################################################################
 # Activity codes:
@@ -44,8 +45,15 @@ def activity_codes(file_name,activity_code):
             exercise_name = "RestingHands"
     return exercise_name
 
-df_dates_pid = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_IOTEX/iotex-glove/pd_dates_list.csv")
-df_lg_paths = pd.read_csv("/Users/shehjarsadhu/Desktop/UniversityOfRhodeIsland/Graduate/WBL/Project_IOTEX/iotex-glove/lg_file_path.csv")
+gc = gs.service_account(filename='/Users/shehjarsadhu/Desktop/carehub-361720-ebee0b4f8dfe.json')
+sh_dates_pid = gc.open_by_url("https://docs.google.com/spreadsheets/d/1e_pihWraVPzhqbrqVT_X-AsDJmLN1rWTaETXN9GPq6w/edit#gid=1243774476")
+ws_dates_pid = sh_dates_pid.worksheet('pd_dates_list')
+df_dates_pid = pd.DataFrame(ws_dates_pid.get_all_records())
+
+sh_lg_paths = gc.open_by_url("https://docs.google.com/spreadsheets/d/168agcyGpMfihuWHku9zvvg6THCxsjmwB0Spnp2psH1Q/edit#gid=1483394103")
+ws_lg_paths = sh_lg_paths.worksheet('lg_file_path')
+df_lg_paths = pd.DataFrame(ws_lg_paths.get_all_records())
+print("df_lg_paths: ",df_lg_paths.head())
 app_iotex_layout = html.Div([
     html.Div([
         html.Header(
